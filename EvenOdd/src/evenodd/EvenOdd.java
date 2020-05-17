@@ -20,52 +20,35 @@ public class EvenOdd {
      */
     public static void main(String[] args) {
 
-        int[] s = {1,2,2};
-        //System.out.println(s[3]);
-        int[] temp = new int[s.length];
-        int index = 0;
-        int cnt = 0;
-        int m=0;
+        int[] arr = {3, 2, 4, 7, 3, 4, 5};
+        int[] temp = new int[arr.length];
+        int start = 0;
         LinkedList<Integer> list = new LinkedList<Integer>();
-        solve(s, index, temp, cnt,list);
         
-        int evenSequences = (int) ((pow(2,s.length) -1) - list.size());
-        System.out.println("\nNumber of sequences that sum to an odd number: "+list.size());
-        System.out.println("Number of sequences that sum to an even number: "+evenSequences);
-    
+        evenOdd(arr, start, temp, list);
 
+        int evenSequences = (int) ((pow(2, arr.length) - 1) - list.size());
+        System.out.println("\nNumber of sequences that sum to an odd number: " + list.size());
+        System.out.println("Number of sequences that sum to an even number: " + evenSequences);
 
     }
 
-    private static void solve(int[] arrInput, int index, int[] temp, int cnt, LinkedList<Integer> l) {
-        if (index == arrInput.length) {
-            String result = "";
-            int r = 0;
-            for (int i = 0; i < temp.length; i++) {
-                if (temp[i] == 1) {
-                    result += arrInput[i] + " ";
-                    r += arrInput[i];
-                    /*if (r % 2 != 0) {
-                        cnt++;
-                    }*/
+    private static void evenOdd(int[] a, int s, int[] t, LinkedList<Integer> l) {
+        if (s == a.length) {
+            int sum = 0;
+            for (int i = 0; i < t.length; i++) {
+                if (t[i] == 1) {
+                    sum += a[i];
                 }
             }
-            if(result ==""){
-                return;
-            }
-            if (r % 2 != 0) {
+            if (sum % 2 != 0) {
                 l.add(1);
-                System.out.println(result);
-            } else {
-                System.out.println(result + " sum = " + r + " even");
             }
             return;
         }
-        //set the current index bit and solve it recursively
-        temp[index] = 1;
-        solve(arrInput, index + 1, temp, cnt,l);
-        //unset the current index bit and solve it recursively
-        temp[index] = 0;
-        solve(arrInput, index + 1, temp, cnt,l);
+        t[s] = 1;
+        evenOdd(a, s + 1, t, l);
+        t[s] = 0;
+        evenOdd(a, s + 1, t, l);
     }
 }

@@ -50,9 +50,8 @@ public class CastleTravel {
         int[] Penalty = new int[castles.length];
         int[] minimizedBy = new int[castles.length];
         Penalty[0] = 0;
-        
+
         /////////Main Algorithm/////////////
-        
         //loop through the all the castle positions
         for (int i = 1; i < Penalty.length; i++) {
             //for every new castle position, check the penalty between
@@ -72,11 +71,11 @@ public class CastleTravel {
             //update the minimum penalty to loop again
             minPenalty = INF;
         }
-        
+
         //create a stack and push the last castle
         Deque<Integer> stack = new ArrayDeque<>();
         stack.push(castles[end]);
-        
+
         //As long as the castle at position 0 isn't reached, 
         //start from the last castle and travel back to the
         //first depending on which stops yield the smallest penalty
@@ -88,13 +87,13 @@ public class CastleTravel {
         }
 
         System.out.print("Stop at:\t");
-        
+
         //as long as the stack still has castles, pop them
         //to reveal the path that yields the smallest penalty
         while (!stack.isEmpty()) {
             System.out.print(stack.pop() + "\t");
         }
-        
+
         //retrieve the penalty for the overall journey
         System.out.println("\nThe penalty is:\t" + Penalty[castles.length - 1]);
     }

@@ -18,10 +18,21 @@ public class TrufflePath {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        /*int[][] c = new int[4][6];
+        for (int i = 0; i < c.length; i++) {
+            for (int j = 0; j < c[i].length; j++) {
+                c[i][j] = 0;
+            }
+            c[i][i]=1;
+        }
+        c[c.length-1][0] = 100;*/
+        //this configuration is fucked up for reasons i do not understand !!!!!!
+        
+        
         int[][] f
                 = {
-                    {1, 5, 1, 5, 1, 5},
-                    {3, 3, 2, 3, 3, 4},
+                    {9, 5, 10, 5, 1, 2},
+                    {10, 3, 10, 3, 3, 4},
                     {2, 3, 4, 4, 4, 2},
                     {2, 2, 3, 2, 2, 3},
                     {2, 2, 4, 3, 4, 2},
@@ -30,12 +41,7 @@ public class TrufflePath {
         int truffleYield;
 
         truffleYield = TruffleHarvest(f);
-        /*for (int i = 0; i < field.length; i++) {
-            for (int j = 0; j < field[i].length; j++) {
-                System.out.print("\t" + field[i][j]);
-            }
-            System.out.print("\n");
-        }*/
+
         System.out.println(truffleYield);
     }
 
@@ -50,10 +56,7 @@ public class TrufflePath {
             }
         }
         int[] temp = new int[field.length];
-        int yes = 0;
-        int s = 0;
         int truffle = -1;
-        int k = 0;
         for (int i = 0; i < y[0].length; i++) {
             if (y[0][i] >= truffle) {
                 truffle = y[0][i];
@@ -62,7 +65,6 @@ public class TrufflePath {
             }
             path[0][i] = i;
         }
-        //System.out.println("[1" + "," + (k+1) + "] - " + truffle);
 
         for (int i = 1; i < y.length; i++) {
             truffle = -1;
@@ -71,14 +73,11 @@ public class TrufflePath {
                 if (j > 0 && j < y[0].length - 1) {
                     if (y[i - 1][j - 1] > y[i - 1][j + 1]) {
                         path[i][j] = j - 1;
-                        yes = field[i - 1][j - 1];
                     } else {
                         if (y[i - 1][j] > y[i - 1][j + 1]) {
                             path[i][j] = j;
-                            yes = field[i - 1][j];
                         } else {
                             path[i][j] = j + 1;
-                            yes = field[i - 1][j + 1];
                         }
                     }
                     y[i][j] = max(y[i - 1][j], max(y[i - 1][j - 1], y[i - 1][j + 1])) + y[i][j];
@@ -87,10 +86,8 @@ public class TrufflePath {
                 else if (j > 0) {
                     if (y[i - 1][j] > y[i - 1][j - 1]) {
                         path[i][j] = j;
-                        yes = field[i - 1][j];
                     } else {
                         path[i][j] = j - 1;
-                        yes = field[i - 1][j - 1];
                     }
                     y[i][j] = max(y[i - 1][j], y[i - 1][j - 1]) + y[i][j];
                     //path[i][j] = j;
@@ -98,10 +95,8 @@ public class TrufflePath {
                 else if (j < y[0].length - 1) {
                     if (y[i - 1][j] > y[i - 1][j + 1]) {
                         path[i][j] = j;
-                        yes = field[i - 1][j];
                     } else {
                         path[i][j] = j + 1;
-                        yes = field[i - 1][j + 1];
                     }
                     y[i][j] = max(y[i - 1][j], y[i - 1][j + 1]) + y[i][j];
                     //path[i][j] = j;
@@ -118,23 +113,25 @@ public class TrufflePath {
         }
         int var = temp.length;
         int crap = temp[var - 1];
-        int crap2 = 0;
-        int position = 0;
         int holder = 0;
-        int holder2 = 0;
 
-        for (int i = 5; i >0; i--) {
-            if (i == 5) {
+        int k = 0;
+        for (int i = y.length -1; i >= 0; i--) {
+            if (i == y.length -1) {
                 System.out.println("[" + (i + 1) + "," + (crap + 1) + "] - ");
             } else {
-                holder = path[i+1][crap];
-                System.out.println("[" + (i + 1) + "," + (holder+1) + "] - ");
+                holder = path[i + 1][crap];
+                System.out.println("[" + (i + 1) + "," + (holder + 1) + "] - ");
                 crap = holder;
             }
         }
-        
-        System.out.println("[1," + (temp[0]+1) + "] - ");
-        
+
+        //System.out.println("[1," + (temp[0]+1) + "] - ");
+        /*for (int i = temp.length - 1; i > 0; i--) {
+            holder = path[i][crap];
+            System.out.println("[" + (i + 1) + "," + (holder) + "] - ");
+            crap = path[i - 1][holder];
+        }*/
         System.out.print("\n");
         System.out.print("\n");
         for (int i = 0; i < y.length; i++) {
